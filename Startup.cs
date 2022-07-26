@@ -17,6 +17,9 @@ using ShoppingCart_API.Models;
 using ShoppingCart_API.Repository;
 using ShoppingCart_API.Services;
 using Swashbuckle;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+
 
 namespace ShoppingCart_API
 {
@@ -33,8 +36,10 @@ namespace ShoppingCart_API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ShoppingCartDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SqlConnection")));
-            //services.AddControllersWithViews().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore).AddNewtonsoftJson(
-            //options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+            /*services.AddControllersWithViews().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore).AddNewtonsoftJson(
+            options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());*/
+            
+            
             //User
             services.AddTransient<IUser, UserRepo>();
             services.AddTransient<UserDetailsServices, UserDetailsServices>();
@@ -54,13 +59,19 @@ namespace ShoppingCart_API
             //Payment
             services.AddTransient<IPayment, PaymentRepo>();
             services.AddTransient<PaymentService, PaymentService>();
+
+            //Address
+            services.AddTransient<IAddress, AddressRepo>();
+            services.AddTransient<AddressService, AddressService>();
+            //services.AddCors();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ShoppingCart_API", Version = "v1" });
             });
         }
-
+        
+        
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {

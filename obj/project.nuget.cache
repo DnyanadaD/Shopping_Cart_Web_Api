@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "Wc9cAiEV63UmI9Fy7l5PfIafzNu/NexOjBOdfkxx0B+lbCRKEQ34jsdIzBonm5Ck3n5J+AEgQSBiE7gG4RYYYQ==",
+  "dgSpecHash": "36uoOCHIRtllWT//63Nobdn0RQW0y5LFd36rPDResgthzwEv/2Vp5xCgE36g56mmisACno3hfDJRB/hIfK+LCQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\dhore\\source\\repos\\ShoppingCart_API\\ShoppingCart_API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\dhore\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
+    "C:\\Users\\dhore\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.0\\microsoft.aspnetcore.authentication.jwtbearer.3.1.0.nupkg.sha512",
     "C:\\Users\\dhore\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\dhore\\.nuget\\packages\\microsoft.data.sqlclient\\2.0.1\\microsoft.data.sqlclient.2.0.1.nupkg.sha512",
     "C:\\Users\\dhore\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\2.0.1\\microsoft.data.sqlclient.sni.runtime.2.0.1.nupkg.sha512",

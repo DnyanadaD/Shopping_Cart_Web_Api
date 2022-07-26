@@ -24,6 +24,7 @@ namespace ShoppingCart_API.Models
         public string MobileNumber { get; set; }
 
         [Required(ErrorMessage = "Password can not be empty")]
+        
         public string Password { get; set; }
 
     }

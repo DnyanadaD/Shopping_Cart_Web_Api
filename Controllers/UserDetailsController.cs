@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ShoppingCart_API.Models;
+using ShoppingCart_API.Repository;
 using ShoppingCart_API.Services;
 
 namespace ShoppingCart_API.Controllers
@@ -11,6 +12,7 @@ namespace ShoppingCart_API.Controllers
     public class UserDetailsController : Controller
     {
         private UserDetailsServices _userDetailsServices;
+        public UserRepo _userDetailsRepository;
 
         #region UserdetailsController
         /// <summary>
@@ -86,5 +88,19 @@ namespace ShoppingCart_API.Controllers
             return Ok(_userDetailsServices.UpdateUserDetails(userDetails));
         }
         #endregion
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] SignInModel signInModel)
+        {
+            var result = await _userDetailsRepository.LoginAsync(signInModel);
+
+            if (string.IsNullOrEmpty(result))
+            {
+                return Unauthorized();
+            }
+
+            return Ok(result);
+        }
+
     }
 }

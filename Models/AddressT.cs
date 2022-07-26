@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ShoppingCart_API.Models
 {
-    public class AdressT
+    public class AddressT
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
