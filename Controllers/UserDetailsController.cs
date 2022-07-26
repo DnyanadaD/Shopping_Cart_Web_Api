@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using ShoppingCart_API.Models;
 using ShoppingCart_API.Repository;
 using ShoppingCart_API.Services;
@@ -12,7 +16,8 @@ namespace ShoppingCart_API.Controllers
     public class UserDetailsController : Controller
     {
         private UserDetailsServices _userDetailsServices;
-        public UserRepo _userDetailsRepository;
+
+
 
         #region UserdetailsController
         /// <summary>
@@ -24,6 +29,12 @@ namespace ShoppingCart_API.Controllers
             _userDetailsServices = userDetailsServices;
         }
         #endregion
+
+        [HttpGet("GetUserbyEmail")]
+        public IActionResult GetUserbyEmail(string EmailId)
+        {
+            return Ok(_userDetailsServices.GetUserbyEmail(EmailId));
+        }
 
         #region GetallUserDetails
         /// <summary>
@@ -89,18 +100,33 @@ namespace ShoppingCart_API.Controllers
         }
         #endregion
 
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] SignInModel signInModel)
+        [HttpPost]
+        [Route("login")]
+        public async Task<IActionResult> Login(SignInModel model)
         {
-            var result = await _userDetailsRepository.LoginAsync(signInModel);
-
-            if (string.IsNullOrEmpty(result))
+            var user = _userDetailsServices.GetUserbyEmail(model.EmailId);
+            if (user != null && model.Password == user.Password)
             {
-                return Unauthorized();
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(new Claim[]
+                    {
+                        new Claim("UserId", user.UserId.ToString())
+                    }),
+                    Expires = DateTime.UtcNow.AddMinutes(15),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("PNM4t3NEYbOd1SGe")), SecurityAlgorithms.HmacSha256Signature)
+                };
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var securityToken = tokenHandler.CreateToken(tokenDescriptor);
+                var token = tokenHandler.WriteToken(securityToken);
+                return Ok(new { token });
+            }
+            else
+            {
+                return BadRequest(new { message = "Email or Password is incorrect." });
             }
 
-            return Ok(result);
-        }
 
+        }
     }
 }

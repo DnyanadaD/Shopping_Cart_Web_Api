@@ -43,5 +43,10 @@ namespace ShoppingCart_API.Services
         {
             return _userDetailsRepository.SaveUserDetails(userDetails);
         }
+
+        public UserDetails GetUserbyEmail(string EmailId)
+        {
+            return _userDetailsRepository.GetUserbyEmail(EmailId);
+        }
     }
 }

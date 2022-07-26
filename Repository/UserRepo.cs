@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.JsonWebTokens;
@@ -18,8 +19,7 @@ namespace ShoppingCart_API.Repository
     public class UserRepo : IUser
     {
         private ShoppingCartDbContext _ShoppingCartDb;
-        private readonly SignInManager<UserDetails> _signInManager;
-        private readonly IConfiguration _configuration;
+       
         public UserRepo(ShoppingCartDbContext ShoppingCartDb)
         {
             _ShoppingCartDb = ShoppingCartDb;
@@ -41,35 +41,6 @@ namespace ShoppingCart_API.Repository
                 msg = "Deleted";
             }
             return msg;
-        }
-        #endregion
-
-        #region JWT
-        public async Task<string> LoginAsync(SignInModel signInModel)
-        {
-            var result = await _signInManager.PasswordSignInAsync(signInModel.EmailId, signInModel.Password, false, false);
-
-            if (!result.Succeeded)
-            {
-                return null;
-            }
-
-            var authClaims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, signInModel.EmailId),
-                new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-            };
-            var authSigninKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration["JWT:Secret"]));
-
-            var token = new JwtSecurityToken(
-                issuer: _configuration["JWT:ValidIssuer"],
-                audience: _configuration["JWT:ValidAudience"],
-                expires: DateTime.Now.AddDays(1),
-                claims: authClaims,
-                signingCredentials: new SigningCredentials(authSigninKey, SecurityAlgorithms.HmacSha256Signature)
-                );
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
         }
         #endregion
 
@@ -134,5 +105,20 @@ namespace ShoppingCart_API.Repository
             return "Updated";
         }
         #endregion
+
+        public UserDetails GetUserbyEmail(string EmailId)
+        {
+            UserDetails user = null;
+            try
+            {
+                user = _ShoppingCartDb.UserDetails.FirstOrDefault(q => q.EmailId == EmailId);
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return user;
+        }
     }
 }

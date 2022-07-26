@@ -19,7 +19,7 @@ using ShoppingCart_API.Services;
 using Swashbuckle;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-
+using System.Text;
 
 namespace ShoppingCart_API
 {
@@ -35,18 +35,43 @@ namespace ShoppingCart_API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = "https://localhost:44389",
+                        ClockSkew = TimeSpan.Zero,
+                        ValidAudiences = new List<string>
+                        {
+                            "https://localhost:44389",
+                            "https://localhost:4200"
+                        },
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("PNM4t3NEYbOd1SGe"))
+                    };
+                });
+
             services.AddDbContext<ShoppingCartDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SqlConnection")));
-            /*services.AddControllersWithViews().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore).AddNewtonsoftJson(
-            options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());*/
-            
-            
+
+
+            #region AddTransients
             //User
             services.AddTransient<IUser, UserRepo>();
             services.AddTransient<UserDetailsServices, UserDetailsServices>();
 
             //Product
             services.AddTransient<IProduct, ProductRepo>();
-            services.AddTransient<ProductService , ProductService>();
+            services.AddTransient<ProductService, ProductService>();
 
             //Cart
             services.AddTransient<ICart, CartRepo>();
@@ -63,6 +88,8 @@ namespace ShoppingCart_API
             //Address
             services.AddTransient<IAddress, AddressRepo>();
             services.AddTransient<AddressService, AddressService>();
+            #endregion
+
             //services.AddCors();
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -70,11 +97,12 @@ namespace ShoppingCart_API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ShoppingCart_API", Version = "v1" });
             });
         }
-        
-        
+
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader());
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -85,6 +113,8 @@ namespace ShoppingCart_API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

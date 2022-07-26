@@ -13,7 +13,6 @@ namespace ShoppingCart_API.Repository
         public string DeleteUserDetails(int UserId);
         UserDetails GetUserDetails(int UserId);
         List<UserDetails> GetAllUserDetails();
-        Task<string> LoginAsync(SignInModel signInModel);
-
+        UserDetails GetUserbyEmail(string EmailId);
     }
 }
