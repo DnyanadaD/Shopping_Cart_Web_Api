@@ -99,13 +99,25 @@ namespace ShoppingCart_API.Repository
         /// <returns></returns>
         public string UpdateUserDetails(UserDetails userDetails)
         {
-
+            try 
+            { 
             _ShoppingCartDb.Entry(userDetails).State = EntityState.Modified;
             _ShoppingCartDb.SaveChanges();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
             return "Updated";
         }
         #endregion
 
+        #region GetUserByEmail
+        /// <summary>
+        /// Method to get the user by Email
+        /// </summary>
+        /// <param name="EmailId"></param>
+        /// <returns></returns>
         public UserDetails GetUserbyEmail(string EmailId)
         {
             UserDetails user = null;
@@ -114,11 +126,12 @@ namespace ShoppingCart_API.Repository
                 user = _ShoppingCartDb.UserDetails.FirstOrDefault(q => q.EmailId == EmailId);
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
+                throw;
             }
             return user;
         }
+        #endregion
     }
 }

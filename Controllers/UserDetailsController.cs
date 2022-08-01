@@ -13,6 +13,8 @@ using ShoppingCart_API.Services;
 
 namespace ShoppingCart_API.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class UserDetailsController : Controller
     {
         private UserDetailsServices _userDetailsServices;

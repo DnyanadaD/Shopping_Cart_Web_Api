@@ -8,6 +8,8 @@ using ShoppingCart_API.Services;
 
 namespace ShoppingCart_API.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class PaymentController : Controller
     {
         public PaymentService _transactionServices;

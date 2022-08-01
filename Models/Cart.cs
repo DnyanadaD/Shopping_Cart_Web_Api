@@ -14,9 +14,6 @@ namespace ShoppingCart_API.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CartId { get; set; }
 
-        [ForeignKey("UserDetails")]
-        public int UserId { get; set; }
-
         [ForeignKey("Product")]
         public int ProductId { get; set; }
        
@@ -24,6 +21,6 @@ namespace ShoppingCart_API.Models
         
         public int Quantity { get; set; }
        
-        public decimal Tprice { get; set; }
+        public decimal Price { get; set; }
     }
 }
