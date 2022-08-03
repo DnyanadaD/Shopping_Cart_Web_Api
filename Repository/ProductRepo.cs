@@ -12,47 +12,129 @@ namespace ShoppingCart_API.Repository
     {
         private ShoppingCartDbContext _ShoppingCartDb;
 
+        #region ProductRepo
+        /// <summary>
+        /// ProductRepo Constuctor
+        /// </summary>
+        /// <param name="ShoppingCartDb"></param>
         public ProductRepo(ShoppingCartDbContext ShoppingCartDb)
         {
             _ShoppingCartDb = ShoppingCartDb;
         }
+        #endregion
+
+
+        #region DeleteProduct
+        /// <summary>
+        /// Method for deleting product
+        /// </summary>
+        /// <param name="ProductId"></param>
+        /// <returns></returns>
         public string DeleteProduct(int ProductId)
         {
             string msg = "";
             Product delete = _ShoppingCartDb.Product.Find(ProductId);//storing the details of the Product in the obj 
-            if (delete != null)
+            try
             {
-                _ShoppingCartDb.Product.Remove(delete);
-                _ShoppingCartDb.SaveChanges();
-                msg = "Deleted";
+                if (delete != null)
+                {
+                    _ShoppingCartDb.Product.Remove(delete);
+                    _ShoppingCartDb.SaveChanges();
+                    msg = "Deleted";
+                }
+            }
+            catch (Exception)
+            {
+                throw;
             }
             return msg;
         }
+        #endregion
 
+
+        #region GetAllProduct
+        /// <summary>
+        /// Method to get all the product
+        /// </summary>
+        /// <returns></returns>
         public List<Product> GetAllProduct()
         {
-            List<Product> product = _ShoppingCartDb.Product.ToList();
-            return product;
+            try
+            {
+                List<Product> product = _ShoppingCartDb.Product.ToList();
+                return product;
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }
+        #endregion
 
+
+        #region GetProduct
+        /// <summary>
+        /// Method to get product by id
+        /// </summary>
+        /// <param name="ProductId"></param>
+        /// <returns></returns>
         public Product GetProduct(int ProductId)
         {
-            Product product = _ShoppingCartDb.Product.Find(ProductId);
-            return product;
+            try
+            {
+                Product product = _ShoppingCartDb.Product.Find(ProductId);
+                return product;
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }
+        #endregion
 
+
+        #region SaveProduct
+        /// <summary>
+        /// Method to save the product details
+        /// </summary>
+        /// <param name="Product"></param>
+        /// <returns></returns>
         public string SaveProduct(Product Product)
         {
-            _ShoppingCartDb.Product.Add(Product);
-            _ShoppingCartDb.SaveChanges();
+            try
+            {
+                _ShoppingCartDb.Product.Add(Product);
+                _ShoppingCartDb.SaveChanges();
+            }
+            catch(Exception)
+            {
+                throw;
+            }
             return "Saved";
         }
+        #endregion
 
+
+        #region UpdateProduct
+        /// <summary>
+        /// Method to Update product details
+        /// </summary>
+        /// <param name="Product"></param>
+        /// <returns></returns>
         public string UpdateProduct(Product Product)
         {
-            _ShoppingCartDb.Entry(Product).State = EntityState.Modified;
-            _ShoppingCartDb.SaveChanges();
+            try
+            {
+                _ShoppingCartDb.Entry(Product).State = EntityState.Modified;
+                _ShoppingCartDb.SaveChanges();
+            }
+            catch(Exception)
+            {
+                throw;
+            }
             return "Updated";
         }
+        #endregion
+
     }
 }

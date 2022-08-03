@@ -31,6 +31,10 @@ namespace ShoppingCart_API.Services
         {
             return _AddressRepository.GetAddress(AddressId);
         }
+        public AddressT GetUserAddress(int UserId)
+        {
+            return _AddressRepository.GetAddress(UserId);
+        }
         public List<AddressT> GetAllAddress()
         {
             return _AddressRepository.GetAllAddress();

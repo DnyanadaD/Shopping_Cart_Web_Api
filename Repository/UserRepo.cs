@@ -19,11 +19,20 @@ namespace ShoppingCart_API.Repository
     public class UserRepo : IUser
     {
         private ShoppingCartDbContext _ShoppingCartDb;
-       
+
+
+        #region UserRepo
+        /// <summary>
+        /// UserRepo Constructor
+        /// </summary>
+        /// <param name="ShoppingCartDb"></param>
         public UserRepo(ShoppingCartDbContext ShoppingCartDb)
         {
             _ShoppingCartDb = ShoppingCartDb;
         }
+        #endregion
+
+
         #region DeleteUserDetails
         /// <summary>
         ///  Function to Delete user details
@@ -33,16 +42,25 @@ namespace ShoppingCart_API.Repository
         public string DeleteUserDetails(int UserId)
         {
             string msg = "";
-            UserDetails deleteUser = _ShoppingCartDb.UserDetails.Find(UserId);//storing the details of the vegetable in the obj 
-            if (deleteUser != null)
+            UserDetails deleteUser = _ShoppingCartDb.UserDetails.Find(UserId); 
+            try
             {
-                _ShoppingCartDb.UserDetails.Remove(deleteUser);
-                _ShoppingCartDb.SaveChanges();
-                msg = "Deleted";
+                if (deleteUser != null)
+                {
+                    _ShoppingCartDb.UserDetails.Remove(deleteUser);
+                    _ShoppingCartDb.SaveChanges();
+                    msg = "Deleted";
+                }
+            }
+            catch (Exception) 
+            {
+                throw;
             }
             return msg;
         }
         #endregion
+
+
 
         #region GetAllUserDetails
         /// <summary>
@@ -51,11 +69,19 @@ namespace ShoppingCart_API.Repository
         /// <returns></returns>
         public List<UserDetails> GetAllUserDetails()
         {
-           
-            List<UserDetails> user = _ShoppingCartDb.UserDetails.ToList();
-            return user;
+            try
+            {
+                List<UserDetails> user = _ShoppingCartDb.UserDetails.ToList();
+                return user;
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }
         #endregion
+
+
 
         #region GetuserDetails
         /// <summary>
@@ -65,10 +91,20 @@ namespace ShoppingCart_API.Repository
         /// <returns></returns>
         public UserDetails GetUserDetails(int UserId)
         {
+            try 
+            {
                 UserDetails user = _ShoppingCartDb.UserDetails.Find(UserId);
-                return user;   
+                return user;
+            }
+            catch(Exception)
+            {
+                throw;
+            }
+              
         }
         #endregion
+
+
 
         #region SaveUserDetails
         /// <summary>
@@ -91,6 +127,8 @@ namespace ShoppingCart_API.Repository
         }
         #endregion
 
+
+
         #region UpdateUserDetails
         /// <summary>
         /// UpdateUserDetails
@@ -111,6 +149,8 @@ namespace ShoppingCart_API.Repository
             return "Updated";
         }
         #endregion
+
+
 
         #region GetUserByEmail
         /// <summary>

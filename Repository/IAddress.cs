@@ -13,6 +13,8 @@ namespace ShoppingCart_API.Repository
         public string UpdateAddress(AddressT AddressT);
         public string DeleteAddress(int AddressId);
         AddressT GetAddress(int AddressId);
+
+        AddressT GetUserAddress (int UserId);
         List<AddressT> GetAllAddress();
     }
 }

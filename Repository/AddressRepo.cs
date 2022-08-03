@@ -37,6 +37,12 @@ namespace ShoppingCart_API.Repository
             return Address;
         }
 
+        public AddressT GetUserAddress(int UserId)
+        {
+            AddressT Address = _ShoppingCartDb.AddressT.Find(UserId);
+            return Address;
+        }
+
         public List<AddressT> GetAllAddress()
         {
             List<AddressT> Address = _ShoppingCartDb.AddressT.ToList();

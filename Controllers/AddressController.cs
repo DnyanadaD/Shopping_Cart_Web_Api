@@ -42,6 +42,12 @@ namespace ShoppingCart_API.Controllers
             return Ok(_addServices.GetAddress(AddressId));
         }
 
+        [HttpGet("GetUserAddress")]
+        public IActionResult GetUserAddress(int UserId)
+        {
+            return Ok(_addServices.GetUserAddress(UserId));
+        }
+
         [HttpGet("GetAllAddress")]
         public List<AddressT> GetAllAddress()
         {
