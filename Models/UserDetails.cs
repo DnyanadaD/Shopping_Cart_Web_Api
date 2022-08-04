@@ -42,5 +42,9 @@ namespace ShoppingCart_API.Models
         [Required(ErrorMessage = "Password can not be empty")]
         public string Password { get; set; }
 
+        [Required]
+        public bool IsLogin { get; set; } = false;
+
+
     }
 }
