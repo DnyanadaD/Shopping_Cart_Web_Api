@@ -59,15 +59,9 @@ namespace ShoppingCart_API.Repository
         /// <returns></returns>
         public List<Product> GetAllProduct()
         {
-            try
-            {
-                List<Product> product = _ShoppingCartDb.Product.ToList();
-                return product;
-            }
-            catch(Exception)
-            {
-                throw;
-            }
+           
+         List<Product> product = _ShoppingCartDb.Product.ToList();
+            return product;
         }
         #endregion
 

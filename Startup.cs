@@ -88,6 +88,10 @@ namespace ShoppingCart_API
             //Address
             services.AddTransient<IAddress, AddressRepo>();
             services.AddTransient<AddressService, AddressService>();
+
+            //Feedback
+            services.AddTransient<IFeedback, FeedbackDetails>();
+            services.AddTransient<FeedbackService, FeedbackService>();
             #endregion
 
             services.AddCors();

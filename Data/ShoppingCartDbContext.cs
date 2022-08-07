@@ -19,9 +19,10 @@ namespace ShoppingCart_API.Data
     public DbSet<Payment> Payment { get; set; }
     public DbSet<Cart> Cart { get; set; }
     public DbSet<Order> Order { get; set; }
-   public DbSet<AddressT> AddressT { get; set; }
+    public DbSet<AddressT> AddressT { get; set; }
+    public DbSet<feedback> feedback { get; set; }
 
-   //public DbSet<SignInModel> SignInModel { get; set; }
-        
+        //public DbSet<SignInModel> SignInModel { get; set; }
+
     }
 }
