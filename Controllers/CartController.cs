@@ -47,7 +47,16 @@ namespace ShoppingCart_API.Controllers
         {
             return _cartServices.GetAllCart();
         }
-         
-         
+
+        [HttpGet("GetCartHistory")]
+        public IActionResult GetCartByUserID(int UserId)
+        {
+            return Ok(_cartServices.GetCartByUserID(UserId));
+        }
+        [HttpGet("GetCartId")]
+        public IActionResult GetCartId(int UserId)
+        {
+            return Ok(_cartServices.GetCartId(UserId));
+        }
     }
 }

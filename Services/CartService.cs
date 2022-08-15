@@ -35,6 +35,15 @@ namespace ShoppingCart_API.Services
         {
             return _cartRepository.GetAllCart();
         }
-         
+
+        public IEnumerable<Cart> GetCartByUserID(int UserId)
+        {
+            return _cartRepository.GetCartByUserID(UserId);
+        }
+        public int GetCartId(int UserId)
+        {
+            return _cartRepository.GetCartId(UserId);
+        }
+
     }
 }

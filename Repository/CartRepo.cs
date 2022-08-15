@@ -53,5 +53,21 @@ namespace ShoppingCart_API.Repository
             _ShoppingCartDb.SaveChanges();
             return "Updated";
         }
+
+        public IEnumerable<Cart> GetCartByUserID(int UserId)
+        {
+            var cart = _ShoppingCartDb.Cart.Where(a => a.UserId == UserId).ToList();
+
+            return cart;
+        }
+
+        public int GetCartId(int UserId)
+        {
+            Cart cart = _ShoppingCartDb.Cart.FirstOrDefault(q => q.UserId == UserId);
+            int CartId = cart.CartId;
+            return CartId;
+        }
+        
+
     }
 }

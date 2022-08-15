@@ -76,3 +76,6 @@ C:\Users\dhore\source\repos\ShoppingCart_API\bin\Debug\netcoreapp3.1\runtimes\wi
 C:\Users\dhore\source\repos\ShoppingCart_API\obj\Debug\netcoreapp3.1\ShoppingCart_API.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\dhore\source\repos\ShoppingCart_API\obj\Debug\netcoreapp3.1\ShoppingCart_API.csproj.CopyComplete
 C:\Users\dhore\source\repos\ShoppingCart_API\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\dhore\source\repos\ShoppingCart_API\bin\Debug\netcoreapp3.1\MailKit.dll
+C:\Users\dhore\source\repos\ShoppingCart_API\bin\Debug\netcoreapp3.1\MimeKit.dll
+C:\Users\dhore\source\repos\ShoppingCart_API\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll

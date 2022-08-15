@@ -13,5 +13,7 @@ namespace ShoppingCart_API.Repository
         public string DeleteCart(int CartId);
         Cart GetCart(int CartId);
         List<Cart> GetAllCart();
+        public IEnumerable<Cart> GetCartByUserID(int UserId);
+        public int GetCartId(int UserId);
     }
 }
